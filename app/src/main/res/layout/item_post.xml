@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/ivPostImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/img_girl" />
+
+    <ImageView
+        android:id="@+id/tbLike"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="6dp"
+        android:src="@drawable/ic_bookmark_border_24"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivPostImage"
+        tools:text="The best photo in the world!" />
+
+
+    <View
+        android:id="@+id/vStatisticBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_social"
+        app:layout_constraintBottom_toBottomOf="@id/ivPostImage"
+        app:layout_constraintEnd_toEndOf="@id/ivPostImage"
+        app:layout_constraintStart_toStartOf="@id/ivLike"
+        app:layout_constraintTop_toTopOf="@id/ivLike" />
+
+    <ImageView
+        android:id="@+id/ivLike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="12dp"
+        android:paddingLeft="12dp"
+        android:paddingTop="6dp"
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp"
+        android:paddingBottom="6dp"
+        android:src="@drawable/ic_like_24"
+        app:layout_constraintBottom_toBottomOf="@id/ivPostImage"
+        app:layout_constraintEnd_toStartOf="@id/tvLikesCount" />
+
+    <TextView
+        android:id="@+id/tvLikesCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/ivLike"
+        app:layout_constraintEnd_toStartOf="@id/ivComment"
+        app:layout_constraintTop_toTopOf="@id/ivLike"
+        tools:text="123" />
+
+    <ImageView
+        android:id="@+id/ivComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="12dp"
+        android:paddingLeft="12dp"
+        android:paddingTop="6dp"
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp"
+        android:paddingBottom="6dp"
+        android:src="@drawable/ic_comment_24"
+        app:layout_constraintBottom_toBottomOf="@id/ivPostImage"
+        app:layout_constraintEnd_toStartOf="@id/tvCommentCount" />
+
+    <TextView
+        android:id="@+id/tvCommentCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
+        app:layout_constraintBottom_toBottomOf="@id/ivComment"
+        app:layout_constraintEnd_toEndOf="@id/ivPostImage"
+        app:layout_constraintTop_toTopOf="@id/ivComment"
+        tools:text="456" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
