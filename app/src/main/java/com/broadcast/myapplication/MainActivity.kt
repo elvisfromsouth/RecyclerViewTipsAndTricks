@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             addItemDecoration(GroupVerticalItemDecoration(R.layout.item_title, 0, 100)) // addable
         }
 
-        adapter.setItems(feed)
+        adapter.submitList(feed.toList())
     }
 
     private fun getFingerprints() = listOf(
@@ -50,6 +50,6 @@ class MainActivity : AppCompatActivity() {
 
         feed.removeAt(postIndex)
         feed.add(postIndex, newItem)
-        adapter.setItems(feed)
+        adapter.submitList(feed.toList())
     }
 }

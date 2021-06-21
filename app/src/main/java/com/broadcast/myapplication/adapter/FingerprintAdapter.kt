@@ -2,15 +2,14 @@ package com.broadcast.myapplication.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
 
 class FingerprintAdapter(
     private val fingerprints: List<ItemFingerprint<*, *>>,
-) : RecyclerView.Adapter<BaseViewHolder<ViewBinding, Item>>() {
-
-    private val items = mutableListOf<Item>()
+) : ListAdapter<Item, BaseViewHolder<ViewBinding, Item>>(
+    FingerprintDiffUtil(fingerprints)
+) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<ViewBinding, Item> {
         val inflater = LayoutInflater.from(parent.context)
@@ -21,25 +20,14 @@ class FingerprintAdapter(
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<ViewBinding, Item>, position: Int) {
-        holder.onBind(items[position])
+        holder.onBind(currentList[position])
     }
 
-    override fun getItemCount() = items.size
-
     override fun getItemViewType(position: Int): Int {
-        val item = items[position]
+        val item = currentList[position]
         return fingerprints.find { it.isRelativeItem(item) }
             ?.getLayoutId()
             ?: throw IllegalArgumentException("View type not found: $item")
-    }
-
-    fun setItems(newItems: List<Item>) {
-        val newList = newItems.toList()
-        val fingerprintDiffUtil = FingerprintDiffUtil(fingerprints, items, newList)
-        val diffResult = DiffUtil.calculateDiff(fingerprintDiffUtil)
-        items.clear()
-        items.addAll(newList)
-        diffResult.dispatchUpdatesTo(this)
     }
 
 }

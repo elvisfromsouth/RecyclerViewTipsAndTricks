@@ -4,25 +4,15 @@ import androidx.recyclerview.widget.DiffUtil
 
 class FingerprintDiffUtil(
     private val fingerprints: List<ItemFingerprint<*, *>>,
-    private val oldList: List<Item>,
-    private val newList: List<Item>,
-) : DiffUtil.Callback() {
+) : DiffUtil.ItemCallback<Item>() {
 
-    override fun getOldListSize() = oldList.size
-
-    override fun getNewListSize() = newList.size
-
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        val oldItem = oldList[oldItemPosition]
-        val newItem = newList[newItemPosition]
+    override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
         if (oldItem::class != newItem::class) return false
 
         return getItemCallback(oldItem).areItemsTheSame(oldItem, newItem)
     }
 
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        val oldItem = oldList[oldItemPosition]
-        val newItem = newList[newItemPosition]
+    override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
         if (oldItem::class != newItem::class) return false
 
         return getItemCallback(oldItem).areContentsTheSame(oldItem, newItem)
