@@ -2,6 +2,7 @@ package com.broadcast.myapplication.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
@@ -33,9 +34,12 @@ class FingerprintAdapter(
     }
 
     fun setItems(newItems: List<Item>) {
+        val newList = newItems.toList()
+        val fingerprintDiffUtil = FingerprintDiffUtil(fingerprints, items, newList)
+        val diffResult = DiffUtil.calculateDiff(fingerprintDiffUtil)
         items.clear()
-        items.addAll(newItems)
-        notifyDataSetChanged()
+        items.addAll(newList)
+        diffResult.dispatchUpdatesTo(this)
     }
 
 }
