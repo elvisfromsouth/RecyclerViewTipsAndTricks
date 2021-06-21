@@ -1,9 +1,16 @@
 package com.broadcast.myapplication.utils
 
 import com.broadcast.myapplication.R
+import com.broadcast.myapplication.model.FeedTitle
 import com.broadcast.myapplication.model.UserPost
 import kotlin.random.Random
 
+fun getRandomFeed() = List(10) {
+    when (it) {
+        0 -> FeedTitle("Актуальное за сегодня:")
+        else -> getRandomUserPost()
+    }
+}
 
 fun getRandomUserPost() = UserPost(
     postId = Random.nextLong(),
