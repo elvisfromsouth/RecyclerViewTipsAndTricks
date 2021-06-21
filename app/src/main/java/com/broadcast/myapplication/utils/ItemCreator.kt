@@ -1,26 +1,41 @@
 package com.broadcast.myapplication.utils
 
+import android.content.Context
+import android.graphics.Typeface
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.StyleSpan
+import androidx.core.content.ContextCompat
 import com.broadcast.myapplication.R
 import com.broadcast.myapplication.model.FeedTitle
 import com.broadcast.myapplication.model.UserPost
 import kotlin.random.Random
 
-fun getRandomFeed() = List(10) {
+fun getRandomFeed(context: Context) = List(10) {
     when (it) {
         0 -> FeedTitle("Актуальное за сегодня:")
-        else -> getRandomUserPost()
+        else -> getRandomUserPost(context)
     }
 }
 
-fun getRandomUserPost() = UserPost(
+fun getRandomUserPost(context: Context) = UserPost(
     postId = Random.nextLong(),
-    userNickname = "User#${Random.nextInt()}",
-    text = commentsSamples.random(),
-    likesCount = Random.nextInt(0, 9999),
-    commentsCount = Random.nextInt(0, 9999),
-    imageResId = imagesIds.random(),
+    mainComment = getPostDescription("User#${Random.nextInt()}", commentsSamples.random()),
+    likesCount = Random.nextInt(0, 9999).toString(),
+    commentsCount = Random.nextInt(0, 9999).toString(),
+    image = ContextCompat.getDrawable(context, imagesIds.random())!!,
     isSaved = false,
 )
+
+private fun getPostDescription(nickName: String, comment: String) =
+    SpannableStringBuilder("$nickName: $comment").apply {
+        setSpan(
+            StyleSpan(Typeface.BOLD),
+            0,
+            nickName.length,
+            Spannable.SPAN_INCLUSIVE_INCLUSIVE
+        )
+    }
 
 private val commentsSamples = listOf(
     "Идейные соображения высшего порядка, а также дальнейшее развитие различных форм деятельности требуют определения и уточнения соответствующий условий активизации.",
