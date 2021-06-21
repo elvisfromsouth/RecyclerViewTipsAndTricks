@@ -1,7 +1,6 @@
 package com.broadcast.myapplication.model
 
 import androidx.annotation.DrawableRes
-import com.broadcast.myapplication.adapter.Item
 
 data class UserPost(
     val postId: Long,
@@ -12,4 +11,4 @@ data class UserPost(
     @DrawableRes
     val imageResId: Int,
     val isSaved: Boolean
-): Item
+)
