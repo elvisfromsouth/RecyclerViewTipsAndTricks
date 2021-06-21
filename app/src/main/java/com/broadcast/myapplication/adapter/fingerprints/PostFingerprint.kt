@@ -35,7 +35,6 @@ class PostFingerprint(
         override fun areItemsTheSame(oldItem: UserPost, newItem: UserPost) = oldItem.postId == newItem.postId
 
         override fun areContentsTheSame(oldItem: UserPost, newItem: UserPost) = oldItem == newItem
-
     }
 
 }
