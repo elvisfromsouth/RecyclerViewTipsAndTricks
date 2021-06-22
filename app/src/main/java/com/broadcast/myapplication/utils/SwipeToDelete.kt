@@ -24,7 +24,7 @@ class SwipeToDelete(
     ) = false
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        onItemDelete(viewHolder.absoluteAdapterPosition)
+        onItemDelete(viewHolder.bindingAdapterPosition)
     }
 
     override fun getSwipeDirs(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
