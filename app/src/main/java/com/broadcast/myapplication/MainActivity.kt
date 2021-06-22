@@ -20,15 +20,12 @@ import com.broadcast.myapplication.databinding.ActivityMainBinding
 import com.broadcast.myapplication.model.FeedTitle
 import com.broadcast.myapplication.model.UserPost
 import com.broadcast.myapplication.utils.SwipeToDelete
-import com.broadcast.myapplication.utils.getRandomFeed
 import com.broadcast.myapplication.utils.getRandomUserPost
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var adapter: FingerprintAdapter
-    private val feed: MutableList<Item> by lazy(LazyThreadSafetyMode.NONE) { getRandomFeed(this) }
 
     private val titlesList: MutableList<Item> by lazy {
         MutableList(1) { FeedTitle("Актуальное за сегодня:") }
@@ -53,8 +50,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
 
-        adapter = FingerprintAdapter(getFingerprints())
-
         with(binding.recyclerView) {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = concatAdapter
@@ -75,18 +70,13 @@ class MainActivity : AppCompatActivity() {
         submitInitialListWithDelayForAnimation()
     }
 
-    private fun getFingerprints() = listOf(
-        TitleFingerprint(),
-        PostFingerprint(::onSavePost)
-    )
-
     private fun onSavePost(post: UserPost) {
-        val postIndex = feed.indexOf(post)
+        val postIndex = postsList.indexOf(post)
         val newItem = post.copy(isSaved = post.isSaved.not())
 
-        feed.removeAt(postIndex)
-        feed.add(postIndex, newItem)
-        adapter.submitList(feed.toList())
+        postsList.removeAt(postIndex)
+        postsList.add(postIndex, newItem)
+        postAdapter.submitList(postsList.toList())
     }
 
     private fun submitInitialListWithDelayForAnimation() {
@@ -98,9 +88,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initSwipeToDelete() {
         val onItemSwipedToDelete = { positionForRemove: Int ->
-            val removedItem = feed[positionForRemove]
-            feed.removeAt(positionForRemove)
-            adapter.submitList(feed.toList())
+            val removedItem = postsList[positionForRemove]
+            postsList.removeAt(positionForRemove)
+            postAdapter.submitList(postsList.toList())
 
             showRestoreItemSnackbar(positionForRemove, removedItem)
 
@@ -112,8 +102,8 @@ class MainActivity : AppCompatActivity() {
     private fun showRestoreItemSnackbar(position: Int, item: Item) {
         Snackbar.make(binding.recyclerView, "Item was deleted", Snackbar.LENGTH_LONG)
             .setAction("Undo") {
-                feed.add(position, item)
-                adapter.submitList(feed.toList())
+                postsList.add(position, item)
+                postAdapter.submitList(postsList.toList())
             }.show()
     }
 }
