@@ -35,6 +35,12 @@ class PostFingerprint(
         override fun areItemsTheSame(oldItem: UserPost, newItem: UserPost) = oldItem.postId == newItem.postId
 
         override fun areContentsTheSame(oldItem: UserPost, newItem: UserPost) = oldItem == newItem
+
+        override fun getChangePayload(oldItem: UserPost, newItem: UserPost): Any? {
+            if (oldItem.isSaved != newItem.isSaved) return newItem.isSaved
+            return super.getChangePayload(oldItem, newItem)
+        }
+
     }
 
 }
@@ -60,6 +66,12 @@ class PostViewHolder(
             ivPostImage.setImageDrawable(item.image)
             tbLike.setChecked(item.isSaved)
         }
+    }
+
+    override fun onBind(item: UserPost, payloads: List<Any>) {
+        super.onBind(item, payloads)
+        val isSaved = payloads.last() as Boolean
+        binding.tbLike.setChecked(isSaved)
     }
 
     private fun ImageView.setChecked(isChecked: Boolean) {

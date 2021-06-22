@@ -23,6 +23,18 @@ class FingerprintAdapter(
         holder.onBind(currentList[position])
     }
 
+    override fun onBindViewHolder(
+        holder: BaseViewHolder<ViewBinding, Item>,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.isNullOrEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            holder.onBind(currentList[position], payloads)
+        }
+    }
+
     override fun getItemViewType(position: Int): Int {
         val item = currentList[position]
         return fingerprints.find { it.isRelativeItem(item) }
