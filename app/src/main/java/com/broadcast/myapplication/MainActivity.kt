@@ -3,6 +3,7 @@ package com.broadcast.myapplication
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.broadcast.myapplication.adapter.FingerprintAdapter
@@ -16,9 +17,11 @@ import com.broadcast.myapplication.adapter.decorations.GroupVerticalItemDecorati
 import com.broadcast.myapplication.adapter.fingerprints.PostFingerprint
 import com.broadcast.myapplication.adapter.fingerprints.TitleFingerprint
 import com.broadcast.myapplication.databinding.ActivityMainBinding
+import com.broadcast.myapplication.model.FeedTitle
 import com.broadcast.myapplication.model.UserPost
 import com.broadcast.myapplication.utils.SwipeToDelete
 import com.broadcast.myapplication.utils.getRandomFeed
+import com.broadcast.myapplication.utils.getRandomUserPost
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +29,24 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: FingerprintAdapter
     private val feed: MutableList<Item> by lazy(LazyThreadSafetyMode.NONE) { getRandomFeed(this) }
+
+    private val titlesList: MutableList<Item> by lazy {
+        MutableList(1) { FeedTitle("Актуальное за сегодня:") }
+    }
+    private val postsList: MutableList<Item> by lazy {
+        MutableList(10) { getRandomUserPost(this) }
+    }
+
+    private val titleAdapter = FingerprintAdapter(listOf(TitleFingerprint()))
+    private val postAdapter = FingerprintAdapter(listOf(PostFingerprint(::onSavePost)))
+
+    private val concatAdapter = ConcatAdapter(
+        ConcatAdapter.Config.Builder()
+            .setIsolateViewTypes(false)
+            .build(),
+        titleAdapter,
+        postAdapter
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
         with(binding.recyclerView) {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = this@MainActivity.adapter
+            adapter = concatAdapter
 
             addItemDecoration(FeedHorizontalDividerItemDecoration(70)) // addable
             addItemDecoration(GroupVerticalItemDecoration(R.layout.item_post, 100, 0)) // addable
@@ -70,7 +91,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun submitInitialListWithDelayForAnimation() {
         binding.recyclerView.postDelayed({
-            adapter.submitList(feed.toList())
+            titleAdapter.submitList(titlesList.toList())
+            postAdapter.submitList(postsList.toList())
         }, 300L)
     }
 
