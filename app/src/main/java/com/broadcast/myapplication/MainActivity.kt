@@ -47,9 +47,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.recyclerView.postDelayed({
-            adapter.submitList(feed.toList())
-        }, 300L)
+        submitInitialListWithDelayForAnimation()
     }
 
     private fun getFingerprints() = listOf(
@@ -64,5 +62,11 @@ class MainActivity : AppCompatActivity() {
         feed.removeAt(postIndex)
         feed.add(postIndex, newItem)
         adapter.submitList(feed.toList())
+    }
+
+    private fun submitInitialListWithDelayForAnimation() {
+        binding.recyclerView.postDelayed({
+            adapter.submitList(feed.toList())
+        }, 300L)
     }
 }
