@@ -6,6 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.broadcast.myapplication.adapter.FingerprintAdapter
 import com.broadcast.myapplication.adapter.Item
+import com.broadcast.myapplication.adapter.animations.AddableItemAnimator
+import com.broadcast.myapplication.adapter.animations.custom.SimpleCommonAnimator
+import com.broadcast.myapplication.adapter.animations.custom.SlideInLeftCommonAnimator
+import com.broadcast.myapplication.adapter.animations.custom.SlideInTopCommonAnimator
 import com.broadcast.myapplication.adapter.decorations.FeedHorizontalDividerItemDecoration
 import com.broadcast.myapplication.adapter.decorations.GroupVerticalItemDecoration
 import com.broadcast.myapplication.adapter.fingerprints.PostFingerprint
@@ -34,9 +38,18 @@ class MainActivity : AppCompatActivity() {
             addItemDecoration(FeedHorizontalDividerItemDecoration(70)) // addable
             addItemDecoration(GroupVerticalItemDecoration(R.layout.item_post, 100, 0)) // addable
             addItemDecoration(GroupVerticalItemDecoration(R.layout.item_title, 0, 100)) // addable
+
+            itemAnimator = AddableItemAnimator(SimpleCommonAnimator()).also { animator ->
+                animator.addViewTypeAnimation(R.layout.item_post, SlideInLeftCommonAnimator())
+                animator.addViewTypeAnimation(R.layout.item_title, SlideInTopCommonAnimator())
+                animator.addDuration = 500L
+                animator.removeDuration = 500L
+            }
         }
 
-        adapter.submitList(feed.toList())
+        binding.recyclerView.postDelayed({
+            adapter.submitList(feed.toList())
+        }, 300L)
     }
 
     private fun getFingerprints() = listOf(
