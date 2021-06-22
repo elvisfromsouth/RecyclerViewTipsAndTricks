@@ -14,13 +14,14 @@ import com.broadcast.myapplication.adapter.animations.custom.SlideInLeftCommonAn
 import com.broadcast.myapplication.adapter.animations.custom.SlideInTopCommonAnimator
 import com.broadcast.myapplication.adapter.decorations.FeedHorizontalDividerItemDecoration
 import com.broadcast.myapplication.adapter.decorations.GroupVerticalItemDecoration
+import com.broadcast.myapplication.adapter.fingerprints.HorizontalItemsFingerprint
 import com.broadcast.myapplication.adapter.fingerprints.PostFingerprint
 import com.broadcast.myapplication.adapter.fingerprints.TitleFingerprint
 import com.broadcast.myapplication.databinding.ActivityMainBinding
 import com.broadcast.myapplication.model.FeedTitle
 import com.broadcast.myapplication.model.UserPost
 import com.broadcast.myapplication.utils.SwipeToDelete
-import com.broadcast.myapplication.utils.getRandomUserPost
+import com.broadcast.myapplication.utils.getRandomFeed
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
@@ -31,11 +32,19 @@ class MainActivity : AppCompatActivity() {
         MutableList(1) { FeedTitle("Актуальное за сегодня:") }
     }
     private val postsList: MutableList<Item> by lazy {
-        MutableList(10) { getRandomUserPost(this) }
+        getRandomFeed(this)
     }
 
     private val titleAdapter = FingerprintAdapter(listOf(TitleFingerprint()))
-    private val postAdapter = FingerprintAdapter(listOf(PostFingerprint(::onSavePost)))
+    private val postAdapter = FingerprintAdapter(
+        listOf(
+            PostFingerprint(::onSavePost),
+            HorizontalItemsFingerprint(
+                listOf(PostFingerprint(::onSavePost)),
+                70
+            )
+        )
+    )
 
     private val concatAdapter = ConcatAdapter(
         ConcatAdapter.Config.Builder()
@@ -54,9 +63,10 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = concatAdapter
 
-            addItemDecoration(FeedHorizontalDividerItemDecoration(70)) // addable
+            addItemDecoration(FeedHorizontalDividerItemDecoration(70, listOf(R.layout.item_horizontal_list))) // addable
             addItemDecoration(GroupVerticalItemDecoration(R.layout.item_post, 100, 0)) // addable
             addItemDecoration(GroupVerticalItemDecoration(R.layout.item_title, 0, 100)) // addable
+            addItemDecoration(GroupVerticalItemDecoration(R.layout.item_horizontal_list, 0, 150)) // addable
 
             itemAnimator = AddableItemAnimator(SimpleCommonAnimator()).also { animator ->
                 animator.addViewTypeAnimation(R.layout.item_post, SlideInLeftCommonAnimator())

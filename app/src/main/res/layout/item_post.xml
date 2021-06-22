@@ -29,13 +29,13 @@
 
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="2"
         android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/ivPostImage"
+        app:layout_constraintStart_toStartOf="@id/ivPostImage"
         app:layout_constraintTop_toBottomOf="@id/ivPostImage"
         tools:text="The best photo in the world!" />
 
