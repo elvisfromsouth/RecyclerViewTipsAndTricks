@@ -8,6 +8,7 @@ import android.graphics.Paint
 import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.broadcast.myapplication.R
 
 
 class SwipeToDelete(
@@ -24,6 +25,14 @@ class SwipeToDelete(
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         onItemDelete(viewHolder.absoluteAdapterPosition)
+    }
+
+    override fun getSwipeDirs(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
+        return if (viewHolder.itemViewType != R.layout.item_post) {
+            ItemTouchHelper.ACTION_STATE_IDLE
+        } else {
+            super.getSwipeDirs(recyclerView, viewHolder)
+        }
     }
 
     override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder) = 0.3f
