@@ -19,7 +19,7 @@ class TitleFingerprint : ItemFingerprint<ItemTitleBinding, FeedTitle> {
         layoutInflater: LayoutInflater,
         parent: ViewGroup
     ): BaseViewHolder<ItemTitleBinding, FeedTitle> {
-        val binding = ItemTitleBinding.inflate(layoutInflater)
+        val binding = ItemTitleBinding.inflate(layoutInflater, parent, false)
         return TitleViewHolder(binding)
     }
 

@@ -24,7 +24,7 @@ class PostFingerprint : ItemFingerprint<ItemPostBinding, UserPost> {
         layoutInflater: LayoutInflater,
         parent: ViewGroup
     ): BaseViewHolder<ItemPostBinding, UserPost> {
-        val binding = ItemPostBinding.inflate(layoutInflater)
+        val binding = ItemPostBinding.inflate(layoutInflater, parent, false)
         return PostViewHolder(binding)
     }
 
