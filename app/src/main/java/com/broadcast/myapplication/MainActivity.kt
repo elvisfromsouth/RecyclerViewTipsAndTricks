@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         listOf(
             PostFingerprint(::onSavePost),
             HorizontalItemsFingerprint(
-                listOf(PostFingerprint(::onSavePost)),
+                listOf(PostFingerprint(::onSavePost, 600)),
                 70
             )
         )
