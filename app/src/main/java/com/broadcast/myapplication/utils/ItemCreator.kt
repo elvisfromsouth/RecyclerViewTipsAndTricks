@@ -11,9 +11,9 @@ import com.broadcast.myapplication.model.HorizontalItems
 import com.broadcast.myapplication.model.UserPost
 import kotlin.random.Random
 
-fun getRandomFeed(context: Context) = MutableList(10) {
+fun getRandomFeed(context: Context) = MutableList(20) {
     when (it) {
-        1, 6, 7 -> getRandomHorizontalItems(context)
+        1, 6, 7, 8, 14, 15 -> getRandomHorizontalItems(context)
         else -> getRandomUserPost(context)
     }
 }

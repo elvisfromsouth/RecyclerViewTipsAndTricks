@@ -16,4 +16,6 @@ abstract class BaseViewHolder<out V : ViewBinding, I : Item>(
     open fun onBind(item: I, payloads: List<Any>) {
         this.item = item
     }
+
+    open fun onViewDetached() = Unit
 }

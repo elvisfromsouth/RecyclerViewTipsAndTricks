@@ -1,5 +1,6 @@
 package com.broadcast.myapplication.adapter.fingerprints
 
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -62,6 +63,16 @@ class HorizontalItemsHolder(
     override fun onBind(item: HorizontalItems) {
         super.onBind(item)
         fingerprintAdapter.submitList(item.items)
+        binding.rvHorizontalItems.restoreState(item.state)
+    }
+
+    override fun onViewDetached() {
+        item.state = binding.rvHorizontalItems.layoutManager?.onSaveInstanceState() ?: return
+    }
+
+    private fun RecyclerView.restoreState(parcelable: Parcelable?) {
+        if (parcelable == null) return
+        layoutManager?.onRestoreInstanceState(parcelable)
     }
 
 }
