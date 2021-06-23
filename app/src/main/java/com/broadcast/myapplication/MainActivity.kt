@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.broadcast.myapplication.adapter.FingerprintAdapter
 import com.broadcast.myapplication.adapter.Item
 import com.broadcast.myapplication.adapter.animations.AddableItemAnimator
@@ -41,7 +42,8 @@ class MainActivity : AppCompatActivity() {
             PostFingerprint(::onSavePost),
             HorizontalItemsFingerprint(
                 listOf(PostFingerprint(::onSavePost, 600)),
-                70
+                70,
+                RecyclerView.RecycledViewPool()
             )
         )
     )
