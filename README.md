@@ -1,6 +1,8 @@
 # RecyclerViewTipsAndTricks
 
 Репозиторий к докладу "Лучшие практики RecyclerView"
+Видео: https://www.youtube.com/watch?v=o8rzzQPOo2U
+Слайды: https://speakerdeck.com/elvisfromsouth/luchshiie-praktiki-recyclerview
 
 ## Содержание
 Каждый шаг - отдельная ветка в репозитории
